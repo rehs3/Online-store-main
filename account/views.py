@@ -3,6 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
+from django.views.decorators.http import require_POST, require_GET
 
 from . import forms
 from .models import CustomUser
@@ -23,6 +24,7 @@ class RegistrationView(generic.CreateView):
         )
 
 
+@require_GET
 def profile(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     data = {
@@ -37,6 +39,7 @@ def profile(request, user_id):
     return render(request, "account/profile.html", context)
 
 
+@require_POST
 def change_image(request):
     form = forms.ImageForm(request.POST, request.FILES)
     if form.is_valid() and form.cleaned_data["main_image"] is not None:
@@ -44,6 +47,7 @@ def change_image(request):
     return redirect(ACCOUNT_PROFILE_URL, user_id=request.user.id)
 
 
+@require_POST
 def remove_image(request, id):
     user = get_object_or_404(CustomUser, id=id)
     user.main_image = forms.default_image[user.gender]
@@ -118,6 +122,7 @@ class UserList(generic.ListView):
 
 
 @staff_member_required
+@require_POST
 def blacklist(request, user_id, category):
     user = get_object_or_404(CustomUser, id=user_id)
     if not user.is_staff or request.user.is_superuser:
@@ -127,6 +132,7 @@ def blacklist(request, user_id, category):
 
 
 @staff_member_required
+@require_POST
 def permissions(request, user_id, category):
     user = get_object_or_404(CustomUser, id=user_id)
     if not user.is_staff or request.user.is_superuser:
