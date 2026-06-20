@@ -1,11 +1,5 @@
-/*global gettext, pgettext, get_format, quickElement, removeChildren*/
-/*
-calendar.js - Calendar functions by Adrian Holovaty
-depends on core.js for utility functions like removeChildren or quickElement
-*/
 'use strict';
 {
-    // CalendarNamespace -- Provides a collection of HTML calendar-related helper functions
     const CalendarNamespace = {
         monthsOfYear: [
             gettext('January'),
@@ -30,7 +24,7 @@ depends on core.js for utility functions like removeChildren or quickElement
             pgettext('one letter Friday', 'F'),
             pgettext('one letter Saturday', 'S')
         ],
-        firstDayOfWeek: parseInt(get_format('FIRST_DAY_OF_WEEK')),
+        firstDayOfWeek: Number.parseInt(get_format('FIRST_DAY_OF_WEEK'), 10),
         isLeapYear: function(year) {
             return (((year % 4) === 0) && ((year % 100) !== 0 ) || ((year % 400) === 0));
         },
@@ -50,38 +44,26 @@ depends on core.js for utility functions like removeChildren or quickElement
             }
             return days;
         },
-        draw: function(month, year, div_id, callback, selected) { // month = 1-12, year = 1-9999
+        draw: function(month, year, div_id, callback, selected) {
             const today = new Date();
             const todayDay = today.getDate();
             const todayMonth = today.getMonth() + 1;
             const todayYear = today.getFullYear();
             let todayClass = '';
 
-            // Use UTC functions here because the date field does not contain time
-            // and using the UTC function variants prevent the local time offset
-            // from altering the date, specifically the day field.  For example:
-            //
-            // ```
-            // var x = new Date('2013-10-02');
-            // var day = x.getDate();
-            // ```
-            //
-            // The day variable above will be 1 instead of 2 in, say, US Pacific time
-            // zone.
             let isSelectedMonth = false;
             if (typeof selected !== 'undefined') {
                 isSelectedMonth = (selected.getUTCFullYear() === year && (selected.getUTCMonth() + 1) === month);
             }
 
-            month = parseInt(month);
-            year = parseInt(year);
+            month = Number.parseInt(month, 10);
+            year = Number.parseInt(year, 10);
             const calDiv = document.getElementById(div_id);
             removeChildren(calDiv);
             const calTable = document.createElement('table');
             quickElement('caption', calTable, CalendarNamespace.monthsOfYear[month - 1] + ' ' + year);
             const tableBody = quickElement('tbody', calTable);
 
-            // Draw days-of-week header
             let tableRow = quickElement('tr', tableBody);
             for (let i = 0; i < 7; i++) {
                 quickElement('th', tableRow, CalendarNamespace.daysOfWeek[(i + CalendarNamespace.firstDayOfWeek) % 7]);
@@ -92,7 +74,6 @@ depends on core.js for utility functions like removeChildren or quickElement
 
             let nonDayCell;
 
-            // Draw blanks before first of month
             tableRow = quickElement('tr', tableBody);
             for (let i = 0; i < startingPos; i++) {
                 nonDayCell = quickElement('td', tableRow, ' ');
@@ -107,7 +88,6 @@ depends on core.js for utility functions like removeChildren or quickElement
                 return onClick;
             }
 
-            // Draw days of month
             let currentDay = 1;
             for (let i = startingPos; currentDay <= days; i++) {
                 if (i % 7 === 0 && currentDay !== 1) {
@@ -119,7 +99,6 @@ depends on core.js for utility functions like removeChildren or quickElement
                     todayClass = '';
                 }
 
-                // use UTC function; see above for explanation.
                 if (isSelectedMonth && currentDay === selected.getUTCDate()) {
                     if (todayClass !== '') {
                         todayClass += " ";
@@ -133,7 +112,6 @@ depends on core.js for utility functions like removeChildren or quickElement
                 currentDay++;
             }
 
-            // Draw blanks after end of month (optional, but makes for valid code)
             while (tableRow.childNodes.length < 7) {
                 nonDayCell = quickElement('td', tableRow, ' ');
                 nonDayCell.className = "nonday";
@@ -143,13 +121,7 @@ depends on core.js for utility functions like removeChildren or quickElement
         }
     };
 
-    // Calendar -- A calendar instance
     function Calendar(div_id, callback, selected) {
-        // div_id (string) is the ID of the element in which the calendar will
-        //     be displayed
-        // callback (string) is the name of a JavaScript function that will be
-        //     called with the parameters (year, month, day) when a day in the
-        //     calendar is clicked
         this.div_id = div_id;
         this.callback = callback;
         this.today = new Date();
