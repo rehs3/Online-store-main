@@ -46,7 +46,7 @@
           </div>
     </div>
     <div class="col-12 col-md-4 col-lg-5 col-xl-3" id="main-image">
-        <img alt="Main user image"  src="{{person.main_image.url}}" style="width:85%; height:85%; border-radius: 15px;">
+        <img alt="{{person.user_name}} avatar" src="{{person.main_image.url}}" style="width:85%; height:85%; border-radius: 15px;">
         <div class="row">
             <div class="col-6">
                 <form enctype="multipart/form-data" action="{% url 'account:change_image'%}" method="post">
