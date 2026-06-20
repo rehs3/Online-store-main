@@ -6,8 +6,10 @@ from django_countries.fields import CountryField
 
 from .manager import CustomUserManager
 
+NOT_SPECIFIED = "Not specified"
+
 Gender = (
-    ("N", "Not specified"),
+    ("N", NOT_SPECIFIED),
     ("F", "Female"),
     ("M", "Male"),
 )
@@ -22,11 +24,11 @@ class CustomUser(PermissionsMixin, AbstractBaseUser):
     user_name = models.CharField(max_length=20)
 
     country = CountryField()
-    city = models.CharField(max_length=15, blank=True, default="Not specified")
+    city = models.CharField(max_length=15, blank=True, default=NOT_SPECIFIED)
     date_joined = models.DateTimeField(default=timezone.now)
     birth_date = models.DateField(blank=True, null=True)
     gender = models.CharField(
-        max_length=13, choices=Gender, default="Not specified"
+        max_length=13, choices=Gender, default=NOT_SPECIFIED
     )
     main_image = models.ImageField(default=image, upload_to="account_image/")
 
