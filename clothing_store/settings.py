@@ -111,11 +111,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Kiev'
+TIME_ZONE = 'UTC'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_L10N = True
 
@@ -131,6 +131,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Locale paths removed (translations disabled)
 
 AUTH_USER_MODEL = 'account.CustomUser'
 

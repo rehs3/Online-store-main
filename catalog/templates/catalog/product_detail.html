@@ -1,4 +1,4 @@
-{%extends 'catalog/base_catalog.html'%}{%load static%} {%load catalog_tags %}
+{%extends 'catalog/base_catalog.html'%}{%load static%} {%load catalog_tags %} {% load i18n %}
 {%block style%}
     <link rel="stylesheet" href="{% static 'css/catalog/product_detail.css'%}">
     <link rel="stylesheet" href="{% static 'css/catalog/product_detail_media.css'%}">
@@ -7,9 +7,9 @@
 
 
     <div class="container-fluid" >
-        {%if user.is_staff%}
-            <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-dark" style="background: #212529">Update</a>
-            <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-dark" style="background: #212529">Delete</a>
+            {%if user.is_staff%}
+            <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-dark" style="background: #212529">{% trans "Update" %}</a>
+            <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-dark" style="background: #212529">{% trans "Delete" %}</a>
         {%endif%}
             <div class="row" style="margin-bottom: 5%;">
 
@@ -36,13 +36,13 @@
                     </div>
 
 
-                          <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                                                        <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
+                                                        <span class="sr-only">{% trans "Previous" %}</span>
                           </a>
                           <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
+                                                        <span class="sr-only">{% trans "Next" %}</span>
                           </a>
 
 
@@ -57,7 +57,7 @@
                             {%if product.quantity > 0%}
                                 <form action="{% url 'cart:cart_add' product.id %}" method="POST">{% csrf_token %}
                                      <div class="row ">
-                                        <div class="col"><button type="input" class="btn btn-dark" style="background: #212529">В корзину</button></div>
+                                        <div class="col"><button type="input" class="btn btn-dark" style="background: #212529">{% trans "Add to cart" %}</button></div>
                                         <div class="col-auto" style="margin-left: -30px">{% csrf_token %} {{ cart_product_form }}</div>
                                     </div>
                                 </form>
@@ -65,7 +65,7 @@
 
                             <div class="col-auto">
                                 <button type="button" value="Previous Page" class="btn btn-dark pull-right" style="background: #212529 margin-left: 15px" onClick="window.history.back();return false;">
-                                    Назад
+                                    {% trans "Back" %}
                                 </button>
                             </div>
                         </div>
@@ -77,9 +77,9 @@
             {%if user.is_authenticated%}
             <div class="col">
               <form action="{% url 'catalog:comment_create' user.id product.id%}" method="POST"> {% csrf_token %}
-                    <p class="label_form"><b>Введите ваш отзыв:</b></p>
-                    <p><textarea class="comment_form" rows="10" cols="45" name="text"></textarea></p>
-                    <p class="bottom_form"><input class="btn btn-dark" style="background: #212529" type="submit"  value="Send comment"></p>
+                  <p class="label_form"><b>{% trans "Enter your review:" %}</b></p>
+                  <p><textarea class="comment_form" rows="10" cols="45" name="text"></textarea></p>
+                  <p class="bottom_form"><input class="btn btn-dark" style="background: #212529" type="submit"  value="{% trans "Send comment" %}"></p>
               </form>
             {%endif%}
                   {%for comment in comments%}
@@ -87,15 +87,15 @@
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Edit comment</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">{% trans "Edit comment" %}</h5>
                               </div>
                                 <form action="{% url 'catalog:comment_edit' comment.id product.id%}" method="POST"> {% csrf_token %}
                                   <div class="modal-body">
                                         <p><textarea class="form-control" rows="10" cols="45" name="text"></textarea></p>
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                     <p style="margin-left: 740px"><input class="btn btn-dark" type="submit"  value="Edit"></p>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
+                                     <p style="margin-left: 740px"><input class="btn btn-dark" type="submit"  value="{% trans "Edit" %}"></p>
                                   </div>
                                 </form>
                             </div>
@@ -134,16 +134,16 @@
                                         </div>
                                    {%if comment.edit_joined is None%}
                                         <div class="col-sm-12 col-md-7 col-lg-6 col-xl-10 mt-3" style="margin-top: 5px">
-                                            Edit: {{comment.edit_joined}}
+                                            {% trans "Edit:" %} {{comment.edit_joined}}
                                         </div>
                                    {%endif%}
 
                                         <div class="col-sm-12 col-md-7 col-lg-6 col-xl-1 mt-3">
                                             {%liked_comment user.like.all comment.like.all as like%}
                                             {%if like%}
-                                                <a href="{% url 'catalog:unlike' like.id product.id%}" class="btn btn-dark">UnLike</a>
+                                                <a href="{% url 'catalog:unlike' like.id product.id%}" class="btn btn-dark">{% trans "UnLike" %}</a>
                                             {%else%}
-                                                <a href="{% url 'catalog:like' comment.id product.id%}" class="btn btn-dark">Like</a>
+                                                <a href="{% url 'catalog:like' comment.id product.id%}" class="btn btn-dark">{% trans "Like" %}</a>
                                             {%endif%}
                                             {{comment.like.count}}
                                         </div>

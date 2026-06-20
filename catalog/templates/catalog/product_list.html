@@ -1,11 +1,12 @@
 {%extends 'catalog/base_catalog.html'%}
+{% load i18n %}
 
 {%block catalog%}
 
 <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
         {%if user.is_staff%}
-            <a href="{% url 'catalog:product_create'%}" class="btn btn-dark" style="background: #212529">Product Create</a>
-            <a href="{% url 'catalog:category_create'%}" class="btn btn-dark" style="background: #212529">Category Create</a>
+            <a href="{% url 'catalog:product_create'%}" class="btn btn-dark" style="background: #212529">{% trans "Product Create" %}</a>
+            <a href="{% url 'catalog:category_create'%}" class="btn btn-dark" style="background: #212529">{% trans "Category Create" %}</a>
         {%endif%}
         <h5>{{visit}}</h5>
         <div class="row">
@@ -14,11 +15,11 @@
                         <ul class="list-group" style="margin-left: -5px">
                             {%if current_category%}
                                 <li>
-                                    <a href="/" class="list-group-item list-group-item-action list-group-item"><h6 style="text-align: center">All categories</h6></a>
+                                    <a href="/" class="list-group-item list-group-item-action list-group-item"><h6 style="text-align: center">{% trans "All categories" %}</h6></a>
                                 </li>
                             {%else%}
                                 <li >
-                                    <a href="/" class="list-group-item list-group-item-action list-group-item-secondary"><h5 style="text-align: center"><em><strong>All categories</strong></em></h5></a>
+                                    <a href="/" class="list-group-item list-group-item-action list-group-item-secondary"><h5 style="text-align: center"><em><strong>{% trans "All categories" %}</strong></em></h5></a>
                                 </li>
                             {%endif%}
 
@@ -33,7 +34,7 @@
                             {% endfor %}
                             {%if user.is_staff%}
                                 <li>
-                                    <a href="{% url 'catalog:category_admin' %}" class="list-group-item list-group-item-action list-group-item" style="background: #212529;"><h5 style="color:white; text-align: center">Category administration</h5></a>
+                                    <a href="{% url 'catalog:category_admin' %}" class="list-group-item list-group-item-action list-group-item" style="background: #212529;"><h5 style="color:white; text-align: center">{% trans "Category administration" %}</h5></a>
                                 </li>
                             {%endif%}
                         </ul>
@@ -58,17 +59,17 @@
                                   <h4 class="card-title">{{product.title}}</h4>
 
                                   <div class="row">
-                                      <div class="col-sm-6"><p>Цена:  <strong>{{product.price}} $</strong></p></div>
+                                      <div class="col-sm-6"><p>{% trans "Price:" %}  <strong>{{product.price}} $</strong></p></div>
                                           {% if product.quantity > 0%}
-                                              <div class="col"><p><strong>В наличии: {{product.quantity}}</strong></p></div>
+                                              <div class="col"><p><strong>{% trans "In stock:" %} {{product.quantity}}</strong></p></div>
                                           {% else %}
-                                              <div><strong><p class="text-danger">Нет в наличии</p></strong></div>
+                                              <div><strong><p class="text-danger">{% trans "Out of stock" %}</p></strong></div>
                                           {% endif %}
                                       </div>
-                                      <a href="{{product.get_absolute_url}}" class="btn btn-dark" style="background: #212529">Detail</a>
+                                      <a href="{{product.get_absolute_url}}" class="btn btn-dark" style="background: #212529">{% trans "Detail" %}</a>
                                       {%if user.is_staff%}
-                                          <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-dark" style="background: #212529">Update</a>
-                                          <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-dark" style="background: #212529">Delete</a>
+                                          <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-dark" style="background: #212529">{% trans "Update" %}</a>
+                                          <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-dark" style="background: #212529">{% trans "Delete" %}</a>
                                       {%endif%}
                                   </div>
                           </div>
