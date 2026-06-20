@@ -7,6 +7,8 @@ from django.views import generic
 from . import forms
 from .models import CustomUser
 
+ACCOUNT_PROFILE_URL = "account:profile"
+
 
 class RegistrationView(generic.CreateView):
     form_class = forms.CustomUserCreationForm
@@ -39,14 +41,14 @@ def change_image(request):
     form = forms.ImageForm(request.POST, request.FILES)
     if form.is_valid() and form.cleaned_data["main_image"] is not None:
         form.save(request.user)
-    return redirect("account:profile", user_id=request.user.id)
+    return redirect(ACCOUNT_PROFILE_URL, user_id=request.user.id)
 
 
 def remove_image(request, id):
     user = get_object_or_404(CustomUser, id=id)
     user.main_image = forms.default_image[user.gender]
     user.save()
-    return redirect("account:profile", user_id=id)
+    return redirect(ACCOUNT_PROFILE_URL, user_id=id)
 
 
 class UpdateProfile(generic.UpdateView):
@@ -57,7 +59,7 @@ class UpdateProfile(generic.UpdateView):
     message = "This form is not valid"
 
     def get_success_url(self):
-        return reverse_lazy("account:profile", kwargs={"user_id": self.object.id})
+        return reverse_lazy(ACCOUNT_PROFILE_URL, kwargs={"user_id": self.object.id})
 
     def form_invalid(self, form):
         return self.render_to_response(
@@ -70,7 +72,7 @@ class PasswordChange(views.PasswordChangeView):
     template_name = "account/change_password.html"
 
     def get_success_url(self):
-        return reverse_lazy("account:profile", kwargs={"user_id": self.request.user.id})
+        return reverse_lazy(ACCOUNT_PROFILE_URL, kwargs={"user_id": self.request.user.id})
 
     def form_invalid(self, form):
         message = password_validation.password_validators_help_text_html()
