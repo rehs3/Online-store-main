@@ -24,7 +24,7 @@ class Category(models.Model):
 class Product(models.Model):
     title = models.CharField(verbose_name='Название товара', max_length=20)
     image = models.ImageField(
-        verbose_name='Главное фото',
+        verbose_name='Главное foto',
         upload_to='product_image/product_photo/main_photo/',
         default='product_image/default_image/default-no-image.png'
     )
