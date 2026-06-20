@@ -1,13 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, \
-    PasswordChangeForm, AuthenticationForm
-from django.forms.widgets import NumberInput, Select, EmailInput, TextInput
-from django_countries.fields import CountryField
-from .models import CustomUser, Gender, image
-from django.utils.translation import gettext, gettext_lazy as _
-from django.contrib.auth import password_validation, authenticate
-from clothing_store import settings
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
+from django.forms.widgets import EmailInput
 from django.utils import timezone
+
+from .models import CustomUser, image
 
 attrs_ = {'class': 'form-control'}
 
@@ -31,7 +28,8 @@ class CustomUserCreationForm(UserCreationForm):
 default_image = {
     "Male": "account_image/default_account_image/Man default_image.jpg",
     "Female": "account_image/default_account_image/Woman_default_image.jpg",
-    "Not specified": image}
+    "Not specified": image
+}
 
 gender_dict = {'N': 'Not specified', 'F': 'Female', 'M': 'Male'}
 
@@ -48,12 +46,12 @@ class ChangeProfileForm(forms.ModelForm):
 
     @property
     def age_valid(self):
-        if (timezone.now().year - self.cleaned_data['birth_date'].year - (
-                (timezone.now().month, timezone.now().day) <
-                (self.cleaned_data['birth_date'].month,
-                 self.cleaned_data['birth_date'].day))) > 1:
-            return True
+        today = timezone.now()
+        birth = self.cleaned_data['birth_date']
+        has_had_birthday = (today.month, today.day) < (birth.month, birth.day)
 
+        if (today.year - birth.year - int(has_had_birthday)) > 1:
+            return True
         return False
 
     @staticmethod

@@ -14,6 +14,9 @@ class Migration(migrations.Migration):
             model_name='customuser',
             name='city',
             field=models.CharField(
-                blank=True, default='Not specified', max_length=15),
+                blank=True,
+                default='Not specified',
+                max_length=15,
+            ),
         ),
     ]
