@@ -62,12 +62,12 @@ class ProductUpdateView(ProductCreateUpdateMixin):
         return self.kwargs
 
     def get(self, *args, **kwargs):
-        kwargs = self.get_form_kwargs()
-        return super().get(*args, **kwargs)
+        form_kwargs = self.get_form_kwargs()
+        return super().get(*args, **form_kwargs)
 
     def post(self, *args, **kwargs):
-        kwargs = self.get_form_kwargs()
-        return super().post(*args, **kwargs)
+        form_kwargs = self.get_form_kwargs()
+        return super().post(*args, **form_kwargs)
 
 
 @staff_member_required(login_url='catalog:product_list')
