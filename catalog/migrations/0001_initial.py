@@ -111,12 +111,16 @@ class Migration(migrations.Migration):
                 (
                     "title",
                     models.CharField(
-                        max_length=20, verbose_name="Название товара"),
+                        max_length=20, verbose_name="Название товара"
+                    ),
                 ),
                 (
                     "image",
                     models.ImageField(
-                        default="product_image/default_image/default-no-image.png",
+                        default=(
+                            "product_image/default_image/"
+                            "default-no-image.png"
+                        ),
                         upload_to="product_image/product_photo/main_photo/",
                         verbose_name="Главное фото",
                     ),
@@ -124,10 +128,17 @@ class Migration(migrations.Migration):
                 (
                     "description",
                     models.TextField(
-                        max_length=1000, verbose_name="Описание товара"),
+                        max_length=1000, verbose_name="Описание товара"
+                    ),
                 ),
-                ("price", models.PositiveIntegerField(verbose_name="Стоимость")),
-                ("quantity", models.PositiveIntegerField(verbose_name="Количество")),
+                (
+                    "price",
+                    models.PositiveIntegerField(verbose_name="Стоимость")
+                ),
+                (
+                    "quantity",
+                    models.PositiveIntegerField(verbose_name="Количество")
+                ),
                 (
                     "category",
                     models.ForeignKey(
