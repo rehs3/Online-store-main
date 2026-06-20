@@ -4,6 +4,8 @@ from django.db import migrations, models
 import django.utils.timezone
 import django_countries.fields
 
+NOT_SPECIFIED = 'Not specified'
+
 
 class Migration(migrations.Migration):
 
@@ -48,7 +50,7 @@ class Migration(migrations.Migration):
                     max_length=2
                 )),
                 ('city', models.CharField(
-                    blank=True, default='Not specified', max_length=4
+                    blank=True, default=NOT_SPECIFIED, max_length=100
                 )),
                 ('date_joined', models.DateTimeField(
                     default=django.utils.timezone.now
@@ -56,11 +58,11 @@ class Migration(migrations.Migration):
                 ('birth_date', models.DateField(blank=True, null=True)),
                 ('gender', models.CharField(
                     choices=[
-                        ('N', 'Not specified'),
+                        ('N', NOT_SPECIFIED),
                         ('F', 'Female'),
                         ('M', 'Male')
                     ],
-                    default='Not specified',
+                    default=NOT_SPECIFIED,
                     max_length=1
                 )),
                 ('main_image', models.ImageField(
