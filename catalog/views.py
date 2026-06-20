@@ -7,6 +7,8 @@ from account.models import CustomUser
 from django.utils import timezone
 from django.contrib.admin.views.decorators import staff_member_required
 
+PRODUCT_DETAIL_URL = 'catalog:product_detail'
+
 
 class ProductList(ListView):
     model = Product
@@ -79,7 +81,7 @@ def comment_create(request, user_id, product_id):
             user=get_object_or_404(CustomUser, id=user_id),
             text=request.POST.get('text')
         )
-    return redirect('catalog:product_detail', product_id)
+    return redirect(PRODUCT_DETAIL_URL, product_id)
 
 
 def comment_edit(request, comment_id, product_id):
@@ -88,14 +90,14 @@ def comment_edit(request, comment_id, product_id):
         edit_comment.text = request.POST.get('text')
         edit_comment.edit_joined = timezone.now()
         edit_comment.save()
-    return redirect('catalog:product_detail', product_id)
+    return redirect(PRODUCT_DETAIL_URL, product_id)
 
 
 def comment_delete(request, comment_id, product_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if comment.user is request.user or request.user.is_staff:
         comment.delete()
-    return redirect('catalog:product_detail', product_id)
+    return redirect(PRODUCT_DETAIL_URL, product_id)
 
 
 def like(request, comment_id, product_id):
@@ -104,14 +106,14 @@ def like(request, comment_id, product_id):
             comment=get_object_or_404(Comment, id=comment_id),
             user=request.user
         )
-    return redirect('catalog:product_detail', product_id)
+    return redirect(PRODUCT_DETAIL_URL, product_id)
 
 
 def unlike(request, like_id, product_id):
     like_ = get_object_or_404(Like, id=like_id)
     if request.user is like_.user:
         like_.delete()
-    return redirect('catalog:product_detail', product_id)
+    return redirect(PRODUCT_DETAIL_URL, product_id)
 
 
 @staff_member_required(login_url='catalog:product_list')
