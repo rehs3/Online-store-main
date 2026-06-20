@@ -74,14 +74,25 @@
                 <div class="col">
                     <form action="{% url 'catalog:comment_create' user.id product.id %}" method="POST">
                         {% csrf_token %}
-                        <p class="label_form"><b>{% trans "Enter your review:" %}</b></p>
-                        <p><textarea class="comment_form" rows="10" cols="45" name="text"></textarea></p>
+                        <label for="id_comment_text" class="label_form"><b>{% trans "Enter your review:" %}</b></label>
+                        <p><textarea id="id_comment_text" class="comment_form" rows="10" cols="45" name="text"></textarea></p>
                         <p class="bottom_form"><input class="btn btn-dark" style="background: #212529" type="submit" value="{% trans 'Send comment' %}"></p>
                     </form>
                 </div>
             {% endif %}
 
             {% for comment in comments %}
-                <dialog class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+                <div class="comment">
+                    <p><strong>{{ comment.user.get_full_name|default:comment.user.username }}:</strong></p>
+                    <p>{{ comment.text }}</p>
+                    <p class="comment-date">{{ comment.created_at }}</p>
+                </div>
+            {% empty %}
+                <p>{% trans "No comments yet." %}</p>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+{% endblock %}
