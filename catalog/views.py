@@ -6,6 +6,7 @@ from .models import Product, Category, Comment, Like
 from account.models import CustomUser
 from django.utils import timezone
 from django.contrib.admin.views.decorators import staff_member_required
+from django.views.decorators.http import require_POST, require_GET
 
 PRODUCT_DETAIL_URL = 'catalog:product_detail'
 
@@ -36,6 +37,7 @@ class ProductList(ListView):
         return context
 
 
+@require_GET
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     context = {
@@ -69,11 +71,13 @@ class ProductUpdateView(ProductCreateUpdateMixin):
 
 
 @staff_member_required(login_url='catalog:product_list')
+@require_POST
 def product_delete(request, product_id):
     get_object_or_404(Product, id=product_id).delete()
     return redirect('catalog:product_list')
 
 
+@require_POST
 def comment_create(request, user_id, product_id):
     if request.user.is_active:
         Comment.objects.create(
@@ -84,6 +88,7 @@ def comment_create(request, user_id, product_id):
     return redirect(PRODUCT_DETAIL_URL, product_id)
 
 
+@require_POST
 def comment_edit(request, comment_id, product_id):
     edit_comment = get_object_or_404(Comment, id=comment_id)
     if request.user is edit_comment.user:
@@ -93,6 +98,7 @@ def comment_edit(request, comment_id, product_id):
     return redirect(PRODUCT_DETAIL_URL, product_id)
 
 
+@require_POST
 def comment_delete(request, comment_id, product_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if comment.user is request.user or request.user.is_staff:
@@ -100,6 +106,7 @@ def comment_delete(request, comment_id, product_id):
     return redirect(PRODUCT_DETAIL_URL, product_id)
 
 
+@require_POST
 def like(request, comment_id, product_id):
     if request.user.is_active:
         Like.objects.create(
@@ -109,6 +116,7 @@ def like(request, comment_id, product_id):
     return redirect(PRODUCT_DETAIL_URL, product_id)
 
 
+@require_POST
 def unlike(request, like_id, product_id):
     like_ = get_object_or_404(Like, id=like_id)
     if request.user is like_.user:
@@ -117,6 +125,7 @@ def unlike(request, like_id, product_id):
 
 
 @staff_member_required(login_url='catalog:product_list')
+@require_POST
 def category_delete(request, id):
     get_object_or_404(Category, id=id).delete()
     return redirect('catalog:product_list')
