@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 from django.contrib import messages
 
 from .cart import Cart
@@ -20,12 +20,14 @@ def cart_add(request, product_id):
     return redirect('cart:cart_detail')
 
 
+@require_POST
 def cart_remove(request, product_id):
     Cart(request).remove(str(product_id))
     messages.success(request, 'Удалено')
     return redirect('cart:cart_detail')
 
 
+@require_GET
 def cart_detail(request):
     cart = Cart(request)
     for item in cart:
