@@ -3,6 +3,7 @@ from django.views.generic.list import ListView
 from cart.cart import Cart
 from .forms import OrderForm
 from .models import Order, OrderItem
+from django.views.decorators.http import require_POST, require_GET
 
 
 def order(request):
@@ -25,6 +26,7 @@ class OrderList(ListView):
         return Order.objects.filter(user__id=self.kwargs.get('user_id'))
 
 
+@require_GET
 def order_detail(request, order_id):
     current_order = get_object_or_404(Order, id=order_id)
     order_dict = {'Name': current_order.name,
