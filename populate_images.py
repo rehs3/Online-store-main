@@ -6,16 +6,12 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'clothing_store.settings')
 django.setup()
 
-
-# Caminho base da mídia
 media_base = Path('media/product_image/photo/Rolex/Rolex Air King')
 
-# Atualizar o produto Rolex com a primeira imagem encontrada
 rolex_product = Product.objects.filter(title='Rolex').first()
 if rolex_product and media_base.exists():
     images = list(media_base.glob('*.jpg'))
     if images:
-        # Usar a primeira imagem como imagem principal
         main_image_path = images[0]
         relative_path = f'product_image/photo/Rolex/Rolex Air King/{main_image_path.name}'
 
@@ -24,11 +20,9 @@ if rolex_product and media_base.exists():
         print(
             f'✅ Imagem principal do Rolex atualizada: {main_image_path.name}')
 
-        # Adicionar todas as imagens como galeria
         for img_path in images:
             relative_path = f'product_image/photo/Rolex/Rolex Air King/{img_path.name}'
 
-            # Verificar se já existe
             if not Gallery.objects.filter(product=rolex_product, image=relative_path).exists():
                 Gallery.objects.create(
                     product=rolex_product,
@@ -36,8 +30,7 @@ if rolex_product and media_base.exists():
                 )
                 print(f'✅ Imagem adicionada à galeria: {img_path.name}')
 
-# Tentar encontrar e adicionar imagens para outros produtos genéricos
-for product in Product.objects.all():
+for product in Product.objects.prefetch_related('gallery_set').all():
     if not product.image or 'default' in product.image.name:
         images = list(media_base.glob('*.jpg'))
         if images:
