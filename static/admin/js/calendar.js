@@ -1,5 +1,6 @@
 'use strict';
 {
+    // CalendarNamespace -- Provides a collection of HTML calendar-related helper functions
     const CalendarNamespace = {
         monthsOfYear: [
             gettext('January'),
@@ -44,13 +45,16 @@
             }
             return days;
         },
-        draw: function(month, year, div_id, callback, selected) {
+        draw: function(month, year, div_id, callback, selected) { // month = 1-12, year = 1-9999
             const today = new Date();
             const todayDay = today.getDate();
             const todayMonth = today.getMonth() + 1;
             const todayYear = today.getFullYear();
             let todayClass = '';
 
+            // Use UTC functions here because the date field does not contain time
+            // and using the UTC function variants prevent the local time offset
+            // from altering the date, specifically the day field.
             let isSelectedMonth = false;
             if (typeof selected !== 'undefined') {
                 isSelectedMonth = (selected.getUTCFullYear() === year && (selected.getUTCMonth() + 1) === month);
@@ -64,6 +68,7 @@
             quickElement('caption', calTable, CalendarNamespace.monthsOfYear[month - 1] + ' ' + year);
             const tableBody = quickElement('tbody', calTable);
 
+            // Draw days-of-week header
             let tableRow = quickElement('tr', tableBody);
             for (let i = 0; i < 7; i++) {
                 quickElement('th', tableRow, CalendarNamespace.daysOfWeek[(i + CalendarNamespace.firstDayOfWeek) % 7]);
@@ -74,6 +79,7 @@
 
             let nonDayCell;
 
+            // Draw blanks before first of month
             tableRow = quickElement('tr', tableBody);
             for (let i = 0; i < startingPos; i++) {
                 nonDayCell = quickElement('td', tableRow, ' ');
@@ -88,6 +94,7 @@
                 return onClick;
             }
 
+            // Draw days of month
             let currentDay = 1;
             for (let i = startingPos; currentDay <= days; i++) {
                 if (i % 7 === 0 && currentDay !== 1) {
@@ -99,6 +106,7 @@
                     todayClass = '';
                 }
 
+                // use UTC function; see above for explanation.
                 if (isSelectedMonth && currentDay === selected.getUTCDate()) {
                     if (todayClass !== '') {
                         todayClass += " ";
@@ -112,6 +120,7 @@
                 currentDay++;
             }
 
+            // Draw blanks after end of month (optional, but makes for valid code)
             while (tableRow.childNodes.length < 7) {
                 nonDayCell = quickElement('td', tableRow, ' ');
                 nonDayCell.className = "nonday";
@@ -121,6 +130,7 @@
         }
     };
 
+    // Calendar -- A calendar instance
     function Calendar(div_id, callback, selected) {
         this.div_id = div_id;
         this.callback = callback;
