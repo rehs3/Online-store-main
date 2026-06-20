@@ -1,7 +1,3 @@
-/*
-    DJANGO Admin styles
-*/
-
 @import url(fonts.css);
 
 html, body {
@@ -16,8 +12,6 @@ body {
     color: #333;
     background: #fff;
 }
-
-/* LINKS */
 
 a:link, a:visited {
     color: #447e9b;
@@ -44,8 +38,6 @@ a.section:link, a.section:visited {
 a.section:focus, a.section:hover {
     text-decoration: underline;
 }
-
-/* GLOBAL DEFAULTS */
 
 p, ol, ul, dl {
     margin: .2em 0 .8em 0;
@@ -136,7 +128,7 @@ fieldset {
 
 blockquote {
     font-size: 11px;
-    color: #777;
+    color: #595959; 
     margin-left: 2px;
     padding-left: 10px;
     border-left: 5px solid #ddd;
@@ -171,8 +163,6 @@ hr {
     line-height: 1px;
 }
 
-/* TEXT STYLES & MODIFIERS */
-
 .small {
     font-size: 11px;
 }
@@ -183,7 +173,7 @@ hr {
 
 .help, p.help, form p.help, div.help, form div.help, div.help li {
     font-size: 11px;
-    color: #999;
+    color: #767676; 
 }
 
 div.help ul {
@@ -199,7 +189,7 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
 }
 
 .quiet, a.quiet:link, a.quiet:visited {
-    color: #999;
+    color: #767676; 
     font-weight: normal;
 }
 
@@ -210,8 +200,6 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
 .nowrap {
     white-space: nowrap;
 }
-
-/* TABLES */
 
 table {
     border-collapse: collapse;
@@ -266,8 +254,6 @@ tr:nth-child(odd) + .row-form-errors,
 tr:nth-child(odd) + .row-form-errors .errorlist {
     background: #f9f9f9;
 }
-
-/* SORTABLE TABLES */
 
 thead th {
     padding: 5px 10px;
@@ -379,8 +365,6 @@ table thead th.sorted .sortoptions a.descending:hover {
     background-position: 0 -70px;
 }
 
-/* FORM DEFAULTS */
-
 input, textarea, select, .form-row p, form .button {
     margin: 2px 0;
     padding: 2px 3px;
@@ -416,12 +400,10 @@ select {
 }
 
 select[multiple] {
-    /* Allow HTML size attribute to override the height in the rule above. */
+    
     height: auto;
     min-height: 150px;
 }
-
-/* FORM BUTTONS */
 
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
     background: #79aec8;
@@ -464,9 +446,6 @@ input[type=submit][disabled].default,
 input[type=button][disabled].default {
     opacity: 0.4;
 }
-
-
-/* MODULES */
 
 .module {
     border: none;
@@ -511,8 +490,6 @@ input[type=button][disabled].default {
 .module table {
     border-collapse: collapse;
 }
-
-/* MESSAGES & ERRORS */
 
 ul.messagelist {
     padding: 0;
@@ -605,14 +582,12 @@ td ul.errorlist + input, td ul.errorlist + select, td ul.errorlist + textarea {
     padding: 5px 0 0 12px;
 }
 
-/* BREADCRUMBS */
-
 div.breadcrumbs {
     background: #79aec8;
     padding: 10px 40px;
     border: none;
     font-size: 14px;
-    color: #c4dce8;
+    color: #1a3a4a; 
     text-align: left;
 }
 
@@ -621,10 +596,8 @@ div.breadcrumbs a {
 }
 
 div.breadcrumbs a:focus, div.breadcrumbs a:hover {
-    color: #c4dce8;
+    color: #0d2233; 
 }
-
-/* ACTION ICONS */
 
 .viewlink, .inlineviewlink {
     padding-left: 16px;
@@ -654,8 +627,6 @@ a.deletelink:focus, a.deletelink:hover {
     color: #993333;
     text-decoration: none;
 }
-
-/* OBJECT TOOLS */
 
 .object-tools {
     font-size: 10px;
@@ -719,8 +690,6 @@ a.deletelink:focus, a.deletelink:hover {
     background-image: url(../img/tooltag-add.svg);
 }
 
-/* OBJECT HISTORY */
-
 table#change-history {
     width: 100%;
 }
@@ -728,8 +697,6 @@ table#change-history {
 table#change-history tbody th {
     width: 16em;
 }
-
-/* PAGE STRUCTURE */
 
 #container {
     position: relative;
@@ -780,8 +747,6 @@ table#change-history tbody th {
     padding: 10px;
 }
 
-/* COLUMN TYPES */
-
 .colMS {
     margin-right: 300px;
 }
@@ -803,8 +768,6 @@ table#change-history tbody th {
 .popup .colM {
     width: auto;
 }
-
-/* HEADER */
 
 #header {
     width: auto;
@@ -847,7 +810,7 @@ table#change-history tbody th {
     font-size: 14px;
     margin: -8px 0 8px 0;
     font-weight: normal;
-    color: #ffc;
+    color: #fff; 
 }
 
 #branding a:hover {
@@ -874,8 +837,6 @@ table#change-history tbody th {
     border-bottom-color: #79aec8;
     color: #79aec8;
 }
-
-/* SIDEBAR */
 
 #content-related {
     background: #f8f8f8;
@@ -952,7 +913,6 @@ table#change-history tbody th {
     background: #ccc;
 }
 
-/* POPUP */
 .popup #content {
     padding: 20px;
 }
