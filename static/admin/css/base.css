@@ -14,7 +14,7 @@ body {
 }
 
 a:link, a:visited {
-    color: #447e9b;
+    color: #3d6e8c;
     text-decoration: none;
 }
 
@@ -333,12 +333,12 @@ table thead th.sorted .sortoptions a.sortremove:after {
     left: 3px;
     font-weight: 200;
     font-size: 18px;
-    color: #999;
+    color: #595959;
 }
 
 table thead th.sorted .sortoptions a.sortremove:focus:after,
 table thead th.sorted .sortoptions a.sortremove:hover:after {
-    color: #447e9b;
+    color: #3d6e8c;
 }
 
 table thead th.sorted .sortoptions a.sortremove:focus,
@@ -660,7 +660,7 @@ a.deletelink:focus, a.deletelink:hover {
     display: block;
     float: left;
     padding: 3px 12px;
-    background: #999;
+    background: #767676;
     font-weight: 400;
     font-size: 11px;
     text-transform: uppercase;
@@ -740,6 +740,7 @@ table#change-history tbody th {
     width: 260px;
     position: relative;
     margin-right: -300px;
+    background: #f8f8f8;
 }
 
 #footer {
@@ -836,10 +837,6 @@ table#change-history tbody th {
     text-decoration: none;
     border-bottom-color: #79aec8;
     color: #79aec8;
-}
-
-#content-related {
-    background: #f8f8f8;
 }
 
 #content-related .module {

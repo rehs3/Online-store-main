@@ -486,9 +486,6 @@ body.popup .submit-row {
     vertical-align: middle;
     background-repeat: no-repeat;
     background-size: 14px;
-}
-
-.related-lookup {
     width: 16px;
     height: 16px;
     background-image: url(../img/search.svg);
