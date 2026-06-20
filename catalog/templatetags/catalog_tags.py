@@ -9,4 +9,3 @@ def liked_comment(user_like, comment_like):
     if len(like) > 0:
         return like[0]
     return False
-

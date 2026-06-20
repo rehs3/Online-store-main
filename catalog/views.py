@@ -1,13 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.list import ListView
 from .mixins import ProductCreateUpdateMixin
-from django.db.models import Q
 from cart.forms import CartAddProductForm
-from .models import Product, Gallery, Category, Comment, Like
-from django.core.paginator import Paginator
+from .models import Product, Category, Comment, Like  # removido: Gallery
 from account.models import CustomUser
 from django.utils import timezone
-from .forms import GalleryForm, CategoryCreationForm
 from django.contrib.admin.views.decorators import staff_member_required
 
 
@@ -50,8 +47,8 @@ class ProductUpdateView(ProductCreateUpdateMixin):
 
     def get_form_kwargs(self):
         self.kwargs['product'] = get_object_or_404(
-                                             Product,
-                                             id=self.kwargs.get('product_id')
+            Product,
+            id=self.kwargs.get('product_id')
         )
         return self.kwargs
 
@@ -113,7 +110,3 @@ def unlike(request, like_id, product_id):
 def category_delete(request, id):
     get_object_or_404(Category, id=id).delete()
     return redirect('catalog:product_list')
-
-
-
-

@@ -92,7 +92,7 @@ class UserList(generic.ListView):
         category = self.kwargs.get('category')
         context = super().get_context_data(**kwargs)
         context['categories'] = (
-                            'All users', 'Staff', 'Customers', 'Blocked users')
+            'All users', 'Staff', 'Customers', 'Blocked users')
         if category is not None:
             context['current_category'] = category
 
@@ -115,4 +115,3 @@ def permissions(request, user_id, category):
         user.is_staff = True if user.is_staff is False else False
         user.save()
     return redirect('account:users', category)
-

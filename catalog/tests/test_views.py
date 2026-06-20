@@ -1,10 +1,8 @@
-from django.test import RequestFactory, TestCase
+from django.test import TestCase
 from catalog import views, models
 from django.urls import reverse
 from cart.forms import CartAddProductForm
-from django.contrib.admin.views.decorators import staff_member_required
 from account.models import CustomUser
-from catalog import views
 
 
 class CreateViewTest(TestCase):
@@ -12,17 +10,17 @@ class CreateViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         for number in range(1, 11):
-           product = models.Product.objects.create(
+            product = models.Product.objects.create(
                 title='Product:{}'.format(number),
                 description='Nice',
                 price=1000,
                 quantity=10
             )
-           category =models.Category.objects.create(
-               title="Category:{}".format(number),
-           )
-           category.products.set([product])
-           models.Gallery.objects.create(
+            category = models.Category.objects.create(
+                title="Category:{}".format(number),
+            )
+            category.products.set([product])
+            models.Gallery.objects.create(
                 product=product,
                 image='product_image/default_image/default-no-image.png'
             )
@@ -37,7 +35,8 @@ class ProductListViewTest(CreateViewTest):
         self.assertEqual(response.status_code, 200)
 
     def test_view_template(self):
-        self.assertTemplateUsed((self.client.get(''), 'catalog/product_list.html'))
+        self.assertTemplateUsed(
+            (self.client.get(''), 'catalog/product_list.html'))
 
     def test_view_list(self):
         all_product_ = self.client.get('').context['products']
@@ -98,8 +97,10 @@ class ProductDeleteTest(TestCase):
     def test_delete_view(self):
         response = self.client.get('/product_delete/3/')
 
-        self.assertTrue(models.Product.objects.filter(id=self.product.id).exists())
-        self.assertRedirects(response, '/?next=%2Fproduct_delete%2F3%2F', 302, 200)
+        self.assertTrue(models.Product.objects.filter(
+            id=self.product.id).exists())
+        self.assertRedirects(
+            response, '/?next=%2Fproduct_delete%2F3%2F', 302, 200)
 
     def test_delete_view_staff(self):
         self.user.is_staff = True
@@ -107,13 +108,14 @@ class ProductDeleteTest(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse('catalog:product_delete', args=[3]))
 
-        self.assertFalse(models.Product.objects.filter(id=self.product.id).exists())
+        self.assertFalse(models.Product.objects.filter(
+            id=self.product.id).exists())
         self.assertRedirects(response, '/', 302, 200)
 
 
 class CommentViewTest(TestCase):
     @classmethod
-    def setUpTestData (cls):
+    def setUpTestData(cls):
         cls.product = models.Product.objects.create(
             title='Watch',
             description='Nice',
@@ -167,14 +169,3 @@ class CommentViewTest(TestCase):
             302,
             200
         )
-
-
-
-
-
-
-
-
-
-
-

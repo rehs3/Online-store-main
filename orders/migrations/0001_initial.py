@@ -17,7 +17,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Order',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=15)),
                 ('family_name', models.CharField(max_length=15)),
                 ('city', models.CharField(max_length=15)),
@@ -33,13 +34,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='OrderItem',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('product', models.CharField(max_length=20)),
                 ('price', models.PositiveIntegerField()),
                 ('quantity', models.PositiveIntegerField()),
                 ('total_price', models.PositiveIntegerField()),
-                ('order', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='items', to='orders.order')),
-                ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='my_orders', to=settings.AUTH_USER_MODEL)),
+                ('order', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
+                 related_name='items', to='orders.order')),
+                ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
+                 related_name='my_orders', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

@@ -13,7 +13,7 @@ class ProductCreateUpdateMixin(View):
         fields=('image',),
         min_num=2,
         extra=1
-        )
+    )
 
     def get(self, *args, **kwargs):
         product = self.kwargs.get('product')
@@ -29,7 +29,7 @@ class ProductCreateUpdateMixin(View):
             self.request.POST,
             self.request.FILES,
             instance=product
-                                     )
+        )
         if formset.is_valid():
             formset.save()
             if self.request.POST.get('add') is not None:
@@ -39,7 +39,8 @@ class ProductCreateUpdateMixin(View):
 
     def post(self, *args, **kwargs):
         product = self.kwargs.get('product')
-        form = ProductCreationForm(self.request.POST, self.request.FILES, instance=product)
+        form = ProductCreationForm(
+            self.request.POST, self.request.FILES, instance=product)
 
         if form.is_valid():
             return self.form_valid(form.save())

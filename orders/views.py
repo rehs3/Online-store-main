@@ -1,4 +1,3 @@
-from django.views.generic import View
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.list import ListView
 from cart.cart import Cart

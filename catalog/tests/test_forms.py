@@ -15,7 +15,7 @@ def test_attrs(form):
 
 class GalleryFormTest(TestCase):
     @classmethod
-    def setUpTestData (cls):
+    def setUpTestData(cls):
         cls.form = GalleryForm()
 
     def test_field_label(self):
@@ -37,13 +37,13 @@ class GalleryFormTest(TestCase):
 
 class ProductCreationFormTest(TestCase):
     @classmethod
-    def setUpTestData (cls):
+    def setUpTestData(cls):
         cls.form = ProductCreationForm()
 
     def test_field_label(self):
         self.assertTrue(self.form.fields['image'].label is None)
 
-    def test_field_required (self):
+    def test_field_required(self):
         self.assertFalse(self.form.fields['image'].required)
 
     def test_image_widget(self):
@@ -57,19 +57,20 @@ class ProductCreationFormTest(TestCase):
         self.assertEqual(self.form.Meta.model, Product)
 
     def test_meta_model_field(self):
-        meta_fields = ('title', 'description', 'price', 'quantity', 'category', 'image')
+        meta_fields = ('title', 'description', 'price',
+                       'quantity', 'category', 'image')
         self.assertEqual(self.form.Meta.fields, meta_fields)
 
 
 class CategoryCreationFormTest(TestCase):
     @classmethod
-    def setUpTestData (cls):
+    def setUpTestData(cls):
         cls.form = CategoryCreationForm()
 
     def test_field_label(self):
         self.assertTrue(self.form.fields['title'].label is None)
 
-    def test_field_required (self):
+    def test_field_required(self):
         self.assertTrue(self.form.fields['title'].required)
 
     def test_image_widget(self):

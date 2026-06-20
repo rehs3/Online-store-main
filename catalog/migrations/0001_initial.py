@@ -110,7 +110,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "title",
-                    models.CharField(max_length=20, verbose_name="Название товара"),
+                    models.CharField(
+                        max_length=20, verbose_name="Название товара"),
                 ),
                 (
                     "image",
@@ -122,7 +123,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "description",
-                    models.TextField(max_length=1000, verbose_name="Описание товара"),
+                    models.TextField(
+                        max_length=1000, verbose_name="Описание товара"),
                 ),
                 ("price", models.PositiveIntegerField(verbose_name="Стоимость")),
                 ("quantity", models.PositiveIntegerField(verbose_name="Количество")),

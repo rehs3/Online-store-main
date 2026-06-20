@@ -79,7 +79,7 @@ class ImageForm(forms.Form):
 
 
 class ChangePasswordForm(PasswordChangeForm):
-    def __init__ (self, user, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         super().__init__(user, *args, **kwargs)
         for key in self.fields.keys():
             self.fields[key].widget.attrs = attrs_

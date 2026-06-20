@@ -23,8 +23,7 @@ for entry in po:
         # translate singular and plural separately
         try:
             trans_sing = translator.translate(entry.msgid, dest='pt').text
-            trans_plur = translator.translate(
-                entry.msgid_plural, dest='pt').text
+            trans_plur = translator.translate(entry.msgid_plural, dest='pt').text
         except Exception as e:
             print('Erro ao traduzir:', entry.msgid, e)
             continue

@@ -17,7 +17,7 @@ class Order(models.Model):
         verbose_name = 'заказ'
         verbose_name_plural = 'заказы'
 
-    def get_absolute_url (self):
+    def get_absolute_url(self):
         return reverse('orders:order_detail', args=[self.id])
 
     def __str__(self):

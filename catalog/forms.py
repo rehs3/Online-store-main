@@ -30,7 +30,7 @@ class ProductCreationForm(forms.ModelForm):
 class CategoryCreationForm(forms.ModelForm):
     title = forms.CharField(
         widget=TextInput(attrs={'class': 'form-control'}),
-         )
+    )
 
     class Meta:
         model = Category

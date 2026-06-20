@@ -3,7 +3,7 @@ from django import forms
 
 class CartAddProductForm(forms.Form):
     quantity = forms.TypedChoiceField(label='', coerce=int,
-                        widget=forms.Select(attrs={'class': 'form-control'}))
+                                      widget=forms.Select(attrs={'class': 'form-control'}))
 
     update = forms.BooleanField(required=False, initial=False,
                                 widget=forms.HiddenInput)
@@ -13,8 +13,6 @@ class CartAddProductForm(forms.Form):
         self.fields['quantity'].choices = ((i, str(i)) for i in range(1,
                                                                       choices))
 
-
-
-    #def quantity_form(self, quantity):
+    # def quantity_form(self, quantity):
      #   self.fields['quantity'].choices = ((i, str(i)) for i in
       #                                     range(1, quantity))
