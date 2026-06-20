@@ -4,6 +4,8 @@ from django.urls import reverse
 from cart.forms import CartAddProductForm
 from account.models import CustomUser
 
+TEST_DUMMY_PASSWORD = "dummy_test_password_123"
+
 
 class CreateViewTest(TestCase):
 
@@ -90,26 +92,24 @@ class ProductDeleteTest(TestCase):
         )
         self.user = CustomUser.objects.create_user(
             email='product_delete_test@gmail.com',
-            password='secret',
+            password=TEST_DUMMY_PASSWORD,
             user_name='ProductDeleteTest'
         )
 
     def test_delete_view(self):
-        response = self.client.get('/product_delete/3/')
+        response = self.client.get(f'/product_delete/{self.product.id}/')
 
-        self.assertTrue(models.Product.objects.filter(
-            id=self.product.id).exists())
+        self.assertTrue(models.Product.objects.filter(id=self.product.id).exists())
         self.assertRedirects(
-            response, '/?next=%2Fproduct_delete%2F3%2F', 302, 200)
+            response, f'/?next=%2Fproduct_delete%2F{self.product.id}%2F', 302, 200)
 
     def test_delete_view_staff(self):
         self.user.is_staff = True
         self.user.save()
         self.client.force_login(self.user)
-        response = self.client.get(reverse('catalog:product_delete', args=[3]))
+        response = self.client.get(reverse('catalog:product_delete', args=[self.product.id]))
 
-        self.assertFalse(models.Product.objects.filter(
-            id=self.product.id).exists())
+        self.assertFalse(models.Product.objects.filter(id=self.product.id).exists())
         self.assertRedirects(response, '/', 302, 200)
 
 
@@ -124,7 +124,7 @@ class CommentViewTest(TestCase):
         )
         cls.user = CustomUser.objects.create_user(
             email='product_delete_test@gmail.com',
-            password='secret',
+            password=TEST_DUMMY_PASSWORD,
             user_name='ProductDeleteTest'
         )
 
