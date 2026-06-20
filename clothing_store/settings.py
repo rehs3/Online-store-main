@@ -3,9 +3,19 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
+
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
+# Provide a fallback secret key for local development when DEBUG is True.
+# In production the environment variable must be set.
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = 'insecure-dev-secret-key-for-local-testing'
+    else:
+        from django.core.exceptions import ImproperlyConfigured
+
+        raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
 
