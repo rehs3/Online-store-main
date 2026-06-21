@@ -8,6 +8,14 @@ from django.views.decorators.http import require_POST, require_GET
 from . import forms
 from .models import CustomUser
 
+import random
+import string
+from django.views.decorators.http import require_http_methods
+from django.core.mail import send_mail
+from django.conf import settings
+
+_pw_reset_store = {}
+
 ACCOUNT_PROFILE_URL = "account:profile"
 
 
@@ -139,3 +147,89 @@ def permissions(request, user_id, category):
         user.is_staff = not user.is_staff
         user.save()
     return redirect("account:users", category=category)
+
+
+@require_http_methods(["GET", "POST"])
+def password_reset_request(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            user = None
+
+        code = ''.join(random.choices(string.digits, k=6))
+        # store temporarily in memory mapped by email
+        _pw_reset_store[email] = {'code': code, 'user_id': getattr(user, 'id', None)}
+
+        # send email (best-effort)
+        try:
+            send_mail(
+                'Seu código de verificação',
+                f'Seu código é: {code}',
+                settings.DEFAULT_FROM_EMAIL if hasattr(settings, 'DEFAULT_FROM_EMAIL') else 'no-reply@example.com',
+                [email],
+                fail_silently=True,
+            )
+        except Exception:
+            pass
+
+        # redirect to verify page
+        request.session['pw_reset_email'] = email
+        return redirect('account:password_reset_verify')
+
+    return render(request, 'account/password_reset_request.html')
+
+
+@require_http_methods(["GET", "POST"])
+def password_reset_verify(request):
+    email = request.session.get('pw_reset_email')
+    if not email:
+        return redirect('account:password_reset_request')
+
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        entry = _pw_reset_store.get(email)
+        if entry and entry.get('code') == code:
+            request.session['pw_reset_verified'] = True
+            return redirect('account:password_reset_new')
+        else:
+            return render(request, 'account/password_reset_verify.html', {'error': 'Código inválido.'})
+
+    return render(request, 'account/password_reset_verify.html')
+
+
+@require_http_methods(["GET", "POST"])
+def password_reset_new_password(request):
+    email = request.session.get('pw_reset_email')
+    verified = request.session.get('pw_reset_verified')
+    if not email or not verified:
+        return redirect('account:password_reset_request')
+
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
+        if password != password2:
+            return render(request, 'account/password_reset_new.html', {'error': 'As senhas não coincidem.'})
+        # find user
+        entry = _pw_reset_store.get(email, {})
+        user_id = entry.get('user_id')
+        if user_id:
+            try:
+                user = CustomUser.objects.get(id=user_id)
+                user.set_password(password)
+                user.save()
+                # cleanup
+                _pw_reset_store.pop(email, None)
+                request.session.pop('pw_reset_verified', None)
+                request.session.pop('pw_reset_email', None)
+                return redirect('account:password_reset_done')
+            except CustomUser.DoesNotExist:
+                pass
+        return render(request, 'account/password_reset_new.html', {'error': 'Usuário não encontrado.'})
+
+    return render(request, 'account/password_reset_new.html')
+
+
+def password_reset_done(request):
+    return render(request, 'account/password_reset_done.html')

@@ -24,9 +24,12 @@
                 </div>
             {%endfor%}
         </div>
-        <div class="col-12">
-            <input type="submit" class="form-control" style="background: #ffc107; border-radius: 10px;"
+        <div class="col-12 login-actions">
+            <input type="submit" class="form-control login-submit"
                 value="{% trans "Log in" %}" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div class="forgot-link">
+                <a href="{% url 'account:password_reset_request' %}">Esqueci a senha</a>
+            </div>
         </div>
     </div>
 

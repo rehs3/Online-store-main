@@ -55,4 +55,10 @@ urlpatterns = [
         views.permissions,
         name="permissions",
     ),
+
+    # Password reset flow (custom)
+    path("password_reset/", views.password_reset_request, name="password_reset_request"),
+    path("password_reset/verify/", views.password_reset_verify, name="password_reset_verify"),
+    path("password_reset/new/", views.password_reset_new_password, name="password_reset_new"),
+    path("password_reset/done/", views.password_reset_done, name="password_reset_done"),
 ]

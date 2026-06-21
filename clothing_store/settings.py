@@ -5,19 +5,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+# SECRET_KEY is required by Django. Prefer using the environment variable in
+# production. For local development we set a permanent key here as requested.
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY') or '8r#y!b2@xqzv4s9p7m&k1h6c0tufg5jnw3lao+e^d%r7pzq'
 
-# Provide a fallback secret key for local development when DEBUG is True.
-# In production the environment variable must be set.
-if not SECRET_KEY:
-    if DEBUG:
-        SECRET_KEY = 'insecure-dev-secret-key-for-local-testing'
-    else:
-        from django.core.exceptions import ImproperlyConfigured
-
-        raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
-
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
+_env_allowed = os.environ.get('DJANGO_ALLOWED_HOSTS', '')
+if _env_allowed:
+    ALLOWED_HOSTS = _env_allowed.split(',')
+else:
+    # Em desenvolvimento, permitir localhost e 127.0.0.1 para evitar 400 Bad Request
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost'] if DEBUG else []
 
 INSTALLED_APPS = [
     'catalog.apps.CatalogConfig',
