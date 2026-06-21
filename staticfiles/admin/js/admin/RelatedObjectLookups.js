@@ -1,6 +1,3 @@
-/*global SelectBox, interpolate*/
-// Handles related-objects functionality: lookup link for raw_id_fields
-// and Add Another links.
 'use strict';
 {
     const $ = django.jQuery;
@@ -9,7 +6,7 @@
         const name = triggeringLink.id.replace(name_regexp, '');
         let href = triggeringLink.href;
         if (add_popup) {
-            if (href.indexOf('?') === -1) {
+            if (!href.includes('?')) {
                 href += '?_popup=1';
             } else {
                 href += '&_popup=1';
@@ -70,7 +67,6 @@
                     elem.value = newId;
                 }
             }
-            // Trigger a change event to update related links if required.
             $(elem).trigger('change');
         } else {
             const toId = name + "_to";
@@ -92,8 +88,6 @@
             }
         });
         selects.next().find('.select2-selection__rendered').each(function() {
-            // The element can have a clear button as a child.
-            // Use the lastChild to modify only the displayed value.
             this.lastChild.textContent = newRepr;
             this.title = newRepr;
         });
@@ -112,17 +106,16 @@
         win.close();
     }
 
-    window.showRelatedObjectLookupPopup = showRelatedObjectLookupPopup;
-    window.dismissRelatedLookupPopup = dismissRelatedLookupPopup;
-    window.showRelatedObjectPopup = showRelatedObjectPopup;
-    window.updateRelatedObjectLinks = updateRelatedObjectLinks;
-    window.dismissAddRelatedObjectPopup = dismissAddRelatedObjectPopup;
-    window.dismissChangeRelatedObjectPopup = dismissChangeRelatedObjectPopup;
-    window.dismissDeleteRelatedObjectPopup = dismissDeleteRelatedObjectPopup;
+    globalThis.showRelatedObjectLookupPopup = showRelatedObjectLookupPopup;
+    globalThis.dismissRelatedLookupPopup = dismissRelatedLookupPopup;
+    globalThis.showRelatedObjectPopup = showRelatedObjectPopup;
+    globalThis.updateRelatedObjectLinks = updateRelatedObjectLinks;
+    globalThis.dismissAddRelatedObjectPopup = dismissAddRelatedObjectPopup;
+    globalThis.dismissChangeRelatedObjectPopup = dismissChangeRelatedObjectPopup;
+    globalThis.dismissDeleteRelatedObjectPopup = dismissDeleteRelatedObjectPopup;
 
-    // Kept for backward compatibility
-    window.showAddAnotherPopup = showRelatedObjectPopup;
-    window.dismissAddAnotherPopup = dismissAddRelatedObjectPopup;
+    globalThis.showAddAnotherPopup = showRelatedObjectPopup;
+    globalThis.dismissAddAnotherPopup = dismissAddRelatedObjectPopup;
 
     $(document).ready(function() {
         $("a[data-popup-opener]").on('click', function(event) {
