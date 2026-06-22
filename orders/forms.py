@@ -4,11 +4,11 @@ from catalog.models import Product
 
 
 class OrderForm(forms.Form):
-    name = forms.CharField(label='Имя')
-    family_name = forms.CharField(label='Фамилия', )
-    city = forms.CharField(label='Город')
-    number_phone = forms.IntegerField(label='Номер телефона')
-    postcode = forms.IntegerField(label='Почтовый индекс')
+    name = forms.CharField(label='Nome')
+    family_name = forms.CharField(label='Sobrenome')
+    city = forms.CharField(label='Cidade')
+    number_phone = forms.IntegerField(label='Telefone')
+    postcode = forms.IntegerField(label='CEP')
 
     name.widget.attrs.update({'class': 'form-control'})
     family_name.widget.attrs.update({'class': 'form-control'})

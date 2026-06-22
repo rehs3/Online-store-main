@@ -10,8 +10,8 @@ attrs_ = {'class': 'form-control'}
 
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(widget=EmailInput(attrs=attrs_))
-    password = forms.CharField(widget=forms.PasswordInput(attrs=attrs_))
+    username = forms.CharField(widget=EmailInput(attrs=attrs_), label='Email')
+    password = forms.CharField(widget=forms.PasswordInput(attrs=attrs_), label='Senha')
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -69,7 +69,7 @@ class ChangeProfileForm(forms.ModelForm):
 
 
 class ImageForm(forms.Form):
-    main_image = forms.ImageField(required=False)
+    main_image = forms.ImageField(required=False, label='Imagem principal')
 
     def save(self, user):
         user.main_image = self.cleaned_data['main_image']
@@ -84,9 +84,9 @@ class ChangePasswordForm(PasswordChangeForm):
 
 
 class ChangeEmailForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(attrs=attrs_))
-    new_email = forms.CharField(widget=EmailInput(attrs=attrs_))
-    repeat_new_email = forms.CharField(widget=EmailInput(attrs=attrs_))
+    password = forms.CharField(widget=forms.PasswordInput(attrs=attrs_), label='Senha')
+    new_email = forms.CharField(widget=EmailInput(attrs=attrs_), label='Novo email')
+    repeat_new_email = forms.CharField(widget=EmailInput(attrs=attrs_), label='Repetir novo email')
 
     class Meta:
         model = CustomUser

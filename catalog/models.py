@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils import timezone
 from account.models import CustomUser
 
-CATEGORY_VERBOSE_NAME = 'Категория'
+CATEGORY_VERBOSE_NAME = 'Categoria'
 
 
 class Category(models.Model):
@@ -18,13 +18,13 @@ class Category(models.Model):
 
     class Meta:
         verbose_name = CATEGORY_VERBOSE_NAME
-        verbose_name_plural = 'Категории'
+        verbose_name_plural = 'Categorias'
 
 
 class Product(models.Model):
-    title = models.CharField(verbose_name='Название товара', max_length=20)
+    title = models.CharField(verbose_name='Nome do produto', max_length=20)
     image = models.ImageField(
-        verbose_name='Главное foto',
+        verbose_name='Foto principal',
         upload_to='product_image/product_photo/main_photo/',
         default='product_image/default_image/default-no-image.png'
     )
@@ -36,11 +36,11 @@ class Product(models.Model):
         null=True
     )
     description = models.TextField(
-        verbose_name='Описание товара',
+        verbose_name='Descrição do produto',
         max_length=1000
     )
-    price = models.PositiveIntegerField(verbose_name='Стоимость')
-    quantity = models.PositiveIntegerField(verbose_name='Количество')
+    price = models.PositiveIntegerField(verbose_name='Preço')
+    quantity = models.PositiveIntegerField(verbose_name='Quantidade')
 
     def get_absolute_url(self):
         return reverse('catalog:product_detail', args=[self.id])
@@ -49,20 +49,20 @@ class Product(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+        verbose_name = 'Produto'
+        verbose_name_plural = 'Produtos'
 
 
 class Gallery(models.Model):
     product = models.ForeignKey(
         Product,
         null=True,
-        verbose_name='Продукт',
+        verbose_name='Produto',
         on_delete=models.CASCADE,
         related_name='images'
     )
     image = models.ImageField(
-        verbose_name='Фотография',
+        verbose_name='Fotografia',
         upload_to='product_image/product_photo/'
     )
 
@@ -70,8 +70,8 @@ class Gallery(models.Model):
         return str(self.image)
 
     class Meta:
-        verbose_name = 'Фото к товару'
-        verbose_name_plural = 'Фотографии к товару'
+        verbose_name = 'Foto do produto'
+        verbose_name_plural = 'Fotos do produto'
 
 
 class Comment(models.Model):

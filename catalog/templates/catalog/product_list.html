@@ -3,9 +3,9 @@
 
 {% block catalog %}
     <div class="container-fluid">
-        {% if user.is_staff %}
-            <a href="{% url 'catalog:product_create' %}" class="btn btn-dark" style="background: #212529">{% trans "Product Create" %}</a>
-            <a href="{% url 'catalog:category_create' %}" class="btn btn-dark" style="background: #212529">{% trans "Category Create" %}</a>
+            {% if user.is_staff %}
+            <a href="{% url 'catalog:product_create' %}" class="btn btn-dark" style="background: #212529">Criar produto</a>
+            <a href="{% url 'catalog:category_create' %}" class="btn btn-dark" style="background: #212529">Criar categoria</a>
         {% endif %}
         
         <h5>{{ visit }}</h5>
@@ -16,11 +16,11 @@
                     <ul class="list-group" style="margin-left: -5px">
                         {% if current_category %}
                             <li class="list-group-item list-group-item-action text-center">
-                                <a href="/" class="text-dark font-weight-bold">{% trans "All categories" %}</a>
+                                <a href="/" class="text-dark font-weight-bold">Todas as categorias</a>
                             </li>
                         {% else %}
                             <li class="list-group-item list-group-item-secondary text-center">
-                                <a href="/" class="text-dark font-weight-bold"><u><i>{% trans "All categories" %}</i></u></a>
+                                <a href="/" class="text-dark font-weight-bold"><u><i>Todas as categorias</i></u></a>
                             </li>
                         {% endif %}
 
@@ -37,8 +37,8 @@
                         {% endfor %}
                         
                         {% if user.is_staff %}
-                            <li class="list-group-item text-center" style="background: #212529;">
-                                <a href="{% url 'catalog:category_admin' %}" class="text-white font-weight-bold">{% trans "Category administration" %}</a>
+                                <li class="list-group-item text-center" style="background: #212529;">
+                                <a href="{% url 'catalog:category_admin' %}" class="text-white font-weight-bold">Administração de categorias</a>
                             </li>
                         {% endif %}
                     </ul>
@@ -63,23 +63,23 @@
 
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <p>{% trans "Price:" %} <strong>{{ product.price }} $</strong></p>
+                                            <p>Preço: <strong>{{ product.price }} $</strong></p>
                                         </div>
                                         {% if product.quantity > 0 %}
                                             <div class="col">
-                                                <p><strong>{% trans "In stock:" %} {{ product.quantity }}</strong></p>
+                                                <p><strong>Em estoque: {{ product.quantity }}</strong></p>
                                             </div>
                                         {% else %}
                                             <div class="col">
-                                                <p class="text-danger"><strong>{% trans "Out of stock" %}</strong></p>
+                                                <p class="text-danger"><strong>Esgotado</strong></p>
                                             </div>
                                         {% endif %}
                                     </div>
                                     
-                                    <a href="{{ product.get_absolute_url }}" class="btn btn-dark" style="background: #212529">{% trans "Detail" %}</a>
+                                    <a href="{{ product.get_absolute_url }}" class="btn btn-dark" style="background: #212529">Detalhes</a>
                                     {% if user.is_staff %}
-                                        <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-dark" style="background: #212529">{% trans "Update" %}</a>
-                                        <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-dark" style="background: #212529">{% trans "Delete" %}</a>
+                                        <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-dark" style="background: #212529">Atualizar</a>
+                                        <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-dark" style="background: #212529">Excluir</a>
                                     {% endif %}
                                 </div>
                             </div>

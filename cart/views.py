@@ -23,7 +23,7 @@ def cart_add(request, product_id):
 @require_POST
 def cart_remove(request, product_id):
     Cart(request).remove(str(product_id))
-    messages.success(request, 'Удалено')
+    messages.success(request, 'Removido com sucesso')
     return redirect('cart:cart_detail')
 
 

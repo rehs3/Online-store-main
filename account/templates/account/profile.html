@@ -9,7 +9,7 @@
   {%if user.is_staff%}
       <div class="container-fluid" style="margin-top:10px;">
           <a href="/admin" class="btn btn-dark" style="background: #212529">Admin</a>
-          <a href="{% url 'account:users' 'All users' %}" class="btn btn-dark" style="background: #212529">Users</a>
+          <a href="{% url 'account:users' 'All users' %}" class="btn btn-dark" style="background: #212529">Usuários</a>
       </div>
   {%endif%}
   <div class="row">
@@ -18,23 +18,23 @@
               <ul class="list-group" style="margin-left: -5px">
 
                   <li>
-                      <a href="{% url 'account:change_password' %}" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">Change password</h5></a>
+                      <a href="{% url 'account:change_password' %}" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">Alterar senha</h5></a>
                   </li>
 
                   <li>
-                      <a href="{% url 'account:change_email' user.id%}" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center"> Change email</h5></a>
+                      <a href="{% url 'account:change_email' user.id%}" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center"> Alterar email</h5></a>
                   </li>
                   <li>
-                      <a href="{% url 'orders:order_list' user_id=user.id%}" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">My orders</h5></a>
+                      <a href="{% url 'orders:order_list' user_id=user.id%}" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">Meus pedidos</h5></a>
                   </li>
                   <li>
-                      <a href="/" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">My comments</h5></a>
+                      <a href="/" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">Meus comentários</h5></a>
                   </li>
                   <li>
-                      <a href="/" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">Cart</h5></a>
+                      <a href="/" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">Carrinho</h5></a>
                   </li>
                   <li>
-                      <a href="{% url 'account:change_profile' user.id%}" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">Change profile</h5></a>
+                      <a href="{% url 'account:change_profile' user.id%}" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">Editar perfil</h5></a>
                   </li>
                   <li>
                       <form method="post" action="{% url 'account:logout' %}">
@@ -54,13 +54,13 @@
             <div class="col-6">
                 <form enctype="multipart/form-data" action="{% url 'account:change_image'%}" method="post">
                     {% csrf_token %}
-                    <input type="submit" class="form-control" style="background: #212529; border-radius: 10px; color:white"
-                      value="Change image" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <input type="submit" class="form-control" style="background: #212529; border-radius: 10px; color:white"
+                      value="Alterar imagem" id="exampleInputEmail1" aria-describedby="emailHelp">
                     {{form}}
                 </form>
             </div>
             <div class="col">
-                <a href="{% url 'account:remove_image' person.id %}" class="btn btn-dark" style="background: #212529;">Remove</a>
+                <a href="{% url 'account:remove_image' person.id %}" class="btn btn-dark" style="background: #212529;">Remover</a>
             </div>
         </div>
     </div>

@@ -36,12 +36,12 @@ class RegistrationView(generic.CreateView):
 def profile(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     data = {
-        "user name": user.user_name,
+        "nome de usuário": user.user_name,
         "email": user.email,
-        "gender": user.gender,
-        "country": user.country.name,
-        "city": user.city,
-        "birth date": user.birth_date,
+        "gênero": user.gender,
+        "país": user.country.name,
+        "cidade": user.city,
+        "data de nascimento": user.birth_date,
     }
     context = {"data": data, "form": forms.ImageForm(), "person": user}
     return render(request, "account/profile.html", context)

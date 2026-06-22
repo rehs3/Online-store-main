@@ -11,8 +11,8 @@
 {% block catalog %}
     <div class="container-fluid">
         {% if user.is_staff %}
-            <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-dark" style="background: #212529">{% trans "Update" %}</a>
-            <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-dark" style="background: #212529">{% trans "Delete" %}</a>
+            <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-dark" style="background: #212529">Atualizar</a>
+            <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-dark" style="background: #212529">Excluir</a>
         {% endif %}
         
         <div class="row" style="margin-bottom: 5%;">
@@ -30,13 +30,13 @@
                     </div>
                 </div>
 
-                <button class="carousel-control-prev" type="button" data-target="#carouselExampleFade" data-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-target="#carouselExampleFade" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">{% trans "Previous" %}</span>
+                    <span class="sr-only">Anterior</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-target="#carouselExampleFade" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">{% trans "Next" %}</span>
+                    <span class="sr-only">Próximo</span>
                 </button>
             </div>
 
@@ -50,7 +50,7 @@
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="col">
-                                        <button type="submit" class="btn btn-dark" style="background: #212529">{% trans "Add to cart" %}</button>
+                                        <button type="submit" class="btn btn-dark" style="background: #212529">Adicionar ao carrinho</button>
                                     </div>
                                     <div class="col-auto" style="margin-left: -30px">
                                         {{ cart_product_form }}
@@ -59,9 +59,9 @@
                             </form>
                         {% endif %}
 
-                        <div class="col-auto">
+                                <div class="col-auto">
                             <button type="button" class="btn btn-dark pull-right" style="background: #212529; margin-left: 15px;" onClick="window.history.back(); return false;">
-                                {% trans "Back" %}
+                                Voltar
                             </button>
                         </div>
                     </div>
@@ -74,9 +74,9 @@
                 <div class="col">
                     <form action="{% url 'catalog:comment_create' user.id product.id %}" method="POST">
                         {% csrf_token %}
-                        <label for="id_comment_text" class="label_form"><b>{% trans "Enter your review:" %}</b></label>
+                        <label for="id_comment_text" class="label_form"><b>Escreva sua avaliação:</b></label>
                         <p><textarea id="id_comment_text" class="comment_form" rows="10" cols="45" name="text"></textarea></p>
-                        <p class="bottom_form"><input class="btn btn-dark" style="background: #212529" type="submit" value="{% trans 'Send comment' %}"></p>
+                        <p class="bottom_form"><input class="btn btn-dark" style="background: #212529" type="submit" value="Enviar comentário"></p>
                     </form>
                 </div>
             {% endif %}
@@ -88,7 +88,7 @@
                     <p class="comment-date">{{ comment.created_at }}</p>
                 </div>
             {% empty %}
-                <p>{% trans "No comments yet." %}</p>
+                <p>Sem comentários ainda.</p>
             {% endfor %}
 
         </div>

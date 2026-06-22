@@ -35,22 +35,22 @@
                         <img  height="100%" src="{{person.main_image.url}}"  style="width:100%;" class="card-img-top" alt="изображение продукта">
                            <div class="card-body" style='width:100%; height:100%;'>
                               <h4 class="card-title">{{person.user_name}}</h4>
-                             <a href="{{person.get_absolute_url}}" class="btn btn-dark" style="background: #212529">Detail</a>
+                             <a href="{{person.get_absolute_url}}" class="btn btn-dark" style="background: #212529">Detalhes</a>
                                {%if person.is_superuser == False and user.id != person.id%}
                                   {%if person.is_active == True%}
                                      {%if not person.is_staff or user.is_superuser%}
-                                         <a href="{% url 'account:blacklist' person.id current_category %}" class="btn btn-dark" style="background: #212529">ban</a>
+                                         <a href="{% url 'account:blacklist' person.id current_category %}" class="btn btn-dark" style="background: #212529">banir</a>
                                      {%else%}
                                      {%if user.is_superuser%}
                                          {%if person.is_staff%}
-                                             <a href="{% url 'account:permissions' person.id current_category %}" class="btn btn-dark" style="background: #212529">take away permissions</a>
+                                             <a href="{% url 'account:permissions' person.id current_category %}" class="btn btn-dark" style="background: #212529">remover permissões</a>
                                          {%else%}
-                                             <a href="{% url 'account:permissions' person.id current_category %}" class="btn btn-dark" style="background: #212529">give permissions</a>
+                                             <a href="{% url 'account:permissions' person.id current_category %}" class="btn btn-dark" style="background: #212529">conceder permissões</a>
                                          {%endif%}
                                      {%endif%}
                                   {%endif%}
                                   {%else%}
-                                     <a href="{% url 'account:blacklist' person.id  current_category %}" class="btn btn-dark" style="background: #212529">unban</a>
+                                     <a href="{% url 'account:blacklist' person.id  current_category %}" class="btn btn-dark" style="background: #212529">desbanir</a>
                                   {%endif%}
                                {%endif%}
                            </div>

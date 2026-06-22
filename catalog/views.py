@@ -3,6 +3,7 @@ from django.views.generic.list import ListView
 from .mixins import ProductCreateUpdateMixin
 from cart.forms import CartAddProductForm
 from .models import Product, Category, Comment, Like
+from django.db.models import Q
 from account.models import CustomUser
 from django.utils import timezone
 from django.contrib.admin.views.decorators import staff_member_required
@@ -28,13 +29,22 @@ class ProductList(ListView):
         if 'products' not in context:
             context['products'] = context.get('object_list')
 
+        return context
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        # filter by category if provided
         category_id = self.kwargs.get('category_id')
         if category_id is not None:
             category = get_object_or_404(Category, id=category_id)
-            context['current_category'] = category
-            context['products'] = category.products.all()
+            qs = category.products.all()
 
-        return context
+        # apply search filter from GET params
+        search_q = self.request.GET.get('search')
+        if search_q:
+            qs = qs.filter(Q(title__icontains=search_q) | Q(description__icontains=search_q))
+
+        return qs
 
 
 @require_GET
