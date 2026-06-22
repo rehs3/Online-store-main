@@ -37,7 +37,10 @@
                       <a href="{% url 'account:change_profile' user.id%}" class="list-group-item list-group-item-action list-group-item"><h5 style="text-align: center">Change profile</h5></a>
                   </li>
                   <li>
-                      <a href="{% url 'account:logout' %}" class="list-group-item list-group-item-action list-group-item" style="background: #212529;"><h5 style="color:white; text-align: center">Log out</h5></a>
+                      <form method="post" action="{% url 'account:logout' %}">
+                          {% csrf_token %}
+                          <button type="submit" class="list-group-item list-group-item-action list-group-item" style="background: #212529; border:none; width:100%"><h5 style="color:white; text-align: center; margin:0">Log out</h5></button>
+                      </form>
                   </li>
 
 
